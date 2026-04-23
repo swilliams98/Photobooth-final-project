@@ -8,6 +8,8 @@ import RandomAnimal from './components/RandomAnimal'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [photoTaken, setPhotoTaken] = useState(false)
+  const [photoCount, setPhotoCount] = useState(0)
 
   return (
     <>
@@ -117,6 +119,8 @@ function App() {
       <div className="ticks"></div>
       <section id="spacer"></section>
       <RandomMeme photoTaken={true} />
+      <RandomAnimal key={photoCount} photoTaken={true} />
+
     </>
   )
 }
