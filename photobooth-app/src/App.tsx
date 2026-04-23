@@ -131,6 +131,7 @@ function App() {
       <section id="spacer"></section>
       {capturedImage && <RandomMeme photoTaken={true} />}
       {capturedImage && <RandomAnimal photoTaken={true} />}
+    {capturedImage && <RandomColor photoTaken={true} />}
 
     </>
   )

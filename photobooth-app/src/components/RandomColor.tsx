@@ -1,26 +1,33 @@
 import styled from "styled-components";
 
 
-// import {useState} from "react";
+import {useState} from "react";
 
-
-const StyledBlock = styled.div`
- background-color: ${(props)=>props.color};
+const StyledRandColor = styled.div`
+    margin: 0 auto;
+    box-sizing: border-box;
+   
+`
+const StyledBlock = styled.div<{color : string}>`
+    background-color: ${(props)=>props.color};
+    width: 400px;
+    height: 400px;
+    border-radius: 15px;
 `
 interface RandomColorProps {
     photoTaken: boolean
 }
 
 export default function RandomColor({ photoTaken }: RandomColorProps) {
-    // const [color] = useState<string>("#" + Math.floor(Math.random() * 0xffffff).toString(16));
-    if (!photoTaken) return (<></>)
+    const [randomColor] = useState(
+        () =>  "#" + Math.floor(Math.random() * 0xffffff).toString(16)
+    );
+     if (!photoTaken) return (<></>)
     return(
-        <div>
+        <StyledRandColor>
             <h1>Your color is:</h1>
-            <StyledBlock>
-
-            </StyledBlock>
-        </div>
+            <StyledBlock color = {randomColor}/>
+        </StyledRandColor>
     );
 
 }
