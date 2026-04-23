@@ -5,11 +5,13 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import RandomMeme from './components/RandomMeme'
 import RandomAnimal from './components/RandomAnimal'
+import Webcam from './components/Webcam'
 
 function App() {
   const [count, setCount] = useState(0)
   const [photoTaken, setPhotoTaken] = useState(false)
   const [photoCount, setPhotoCount] = useState(0)
+  const [capturedImage, setCapturedImage] = useState<string | null>(null)
 
   return (
     <>
@@ -115,6 +117,15 @@ function App() {
           </ul>
         </div>
       </section>
+
+      <div>
+        <h1>Take A Pic</h1>
+        <div className="card">
+          <p>webcam should be here</p>
+          <Webcam setCapturedImage={setCapturedImage} />
+          {capturedImage && <img src={capturedImage} alt="captured" />}
+        </div>
+      </div>
 
       <div className="ticks"></div>
       <section id="spacer"></section>

@@ -7,9 +7,7 @@ const videoConstraints = {
     facingMode: "user"
 };
 
-
-
-const WebcamCapture = ({setCapturedImage} : any) => (
+const Webcam = ({setCapturedImage} : any) => (
     <ReactWebcam
         audio={false}
         mirrored
@@ -32,5 +30,5 @@ const WebcamCapture = ({setCapturedImage} : any) => (
     </ReactWebcam>
 )
 
-export default WebcamCapture
+export default Webcam
 
