@@ -118,20 +118,31 @@ function App() {
       {/*  </div>*/}
       {/*</section>*/}
 
+      {/*<div>*/}
+      {/*  <h1>Take A Pic</h1>*/}
+      {/*  <div className="card">*/}
+      {/*    <p>webcam should be here</p>*/}
+      {/*    <Webcam setCapturedImage={setCapturedImage} />*/}
+      {/*    {capturedImage && <img src={capturedImage} alt="captured" />}*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <div>
-        <h1>Take A Pic</h1>
-        <div className="card">
-          <p>webcam should be here</p>
-          <Webcam setCapturedImage={setCapturedImage} />
-          {capturedImage && <img src={capturedImage} alt="captured" />}
+          <h1>Webcam Feature</h1>
+            <div className="container">
+              {!capturedImage && (
+                  <Webcam
+                      setCapturedImage={setCapturedImage}
+                  />
+
+              )}
+              {capturedImage && <img src={capturedImage} />}
+            </div>
         </div>
-      </div>
 
       <div className="ticks"></div>
       <section id="spacer"></section>
       {capturedImage && <RandomMeme photoTaken={true} />}
-      {capturedImage && <RandomAnimal photoTaken={true} />}
-    {capturedImage && <RandomColor photoTaken={true} />}
+      {capturedImage && <RandomAnimal photoTaken={true} />}{capturedImage && <RandomColor photoTaken={true} />}
 
     </>
   )
