@@ -182,3 +182,11 @@
 /*    border-right-color: var(--border);*/
 /*  }*/
 /*}*/
+@font-face {
+    font-family: 'Reemkufi';
+    src: url('./fonts/Reem_Kufi/static/Reemkufi-Medium.ttf') format('truetype');
+}
+
+body{
+    font-family: 'Reemkufi';
+}
