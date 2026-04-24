@@ -14,7 +14,7 @@ const StyledContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin: auto;
-    padding-top: 20px;
+    padding-top: -20px;
     
 `
 
@@ -23,10 +23,11 @@ const StyledBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    margin: auto;
+    width: 100%;
 
     @media screen and (max-width: 1000px) {
         flex-direction: column;
+        align-items: center;
 
     }
 `
