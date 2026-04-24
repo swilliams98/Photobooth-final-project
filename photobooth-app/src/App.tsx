@@ -1,12 +1,19 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from './assets/vite.svg'
+// import heroImg from './assets/hero.png'
 import './App.css'
 import RandomMeme from './components/RandomMeme'
 import RandomAnimal from './components/RandomAnimal'
-import Webcam from './components/Webcam'
+import Webcam, { StyledButton } from './components/Webcam'
 import RandomColor from "./components/RandomColor.tsx";
+import styled from "styled-components"
+
+const StyledContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 function App() {
   const [count, setCount] = useState(0)
@@ -118,20 +125,32 @@ function App() {
       {/*  </div>*/}
       {/*</section>*/}
 
+      {/*<div>*/}
+      {/*  <h1>Take A Pic</h1>*/}
+      {/*  <div className="card">*/}
+      {/*    <p>webcam should be here</p>*/}
+      {/*    <Webcam setCapturedImage={setCapturedImage} />*/}
+      {/*    {capturedImage && <img src={capturedImage} alt="captured" />}*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <div>
-        <h1>Take A Pic</h1>
-        <div className="card">
-          <p>webcam should be here</p>
-          <Webcam setCapturedImage={setCapturedImage} />
-          {capturedImage && <img src={capturedImage} alt="captured" />}
-        </div>
+          <h1>Webcam Feature</h1>
+            <StyledContainer>
+              {!capturedImage && (
+                  <Webcam
+                      setCapturedImage={setCapturedImage}
+                  />
+
+              )}
+                {capturedImage && <img src={capturedImage} />}
+                {capturedImage && <StyledButton onClick={() => setCapturedImage(null)}>Retake</StyledButton>}
+            </StyledContainer>
       </div>
 
       <div className="ticks"></div>
       <section id="spacer"></section>
       {capturedImage && <RandomMeme photoTaken={true} />}
-      {capturedImage && <RandomAnimal photoTaken={true} />}
-    {capturedImage && <RandomColor photoTaken={true} />}
+      {capturedImage && <RandomAnimal photoTaken={true} />}{capturedImage && <RandomColor photoTaken={true} />}
 
     </>
   )

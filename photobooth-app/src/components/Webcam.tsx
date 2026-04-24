@@ -16,7 +16,7 @@ const StyledDiv = styled.div`
     border-radius: 5px;
 `
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
     padding: auto;
     margin: 10px;
 
@@ -34,14 +34,19 @@ const Webcam = ({setCapturedImage} : any) => (
         >
             {/* @ts-expect-error */}
             {({ getScreenshot }) => (
-                <StyledButton
-                    onClick={() => {
-                        const imageSrc = getScreenshot()
-                        setCapturedImage(imageSrc)
-                    }}
-                >
-                    Capture photo
-                </StyledButton>
+                <>
+                    <StyledButton
+                        onClick={() => {
+                            const imageSrc = getScreenshot()
+                            setCapturedImage(imageSrc)
+                        }}
+                    >
+                        Capture photo
+                    </StyledButton>
+                    {/*<StyledButton onClick={() => setCapturedImage(null)}>*/}
+                    {/*    Retake*/}
+                    {/*</StyledButton>*/}
+                </>
             )}
         </ReactWebcam>
     </StyledDiv>
