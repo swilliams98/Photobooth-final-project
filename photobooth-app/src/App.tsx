@@ -21,8 +21,12 @@ const StyledBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    
     margin: auto;
+
+    @media screen and (max-width: 1000px) {
+        flex-direction: column;
+
+    }
 
     
 `
@@ -49,6 +53,7 @@ function App() {
 
           <div className="ticks"></div>
           <section id="spacer"></section>
+          <div className="heyy">
           <StyledBox>
               {capturedImage && <RandomMeme photoTaken={true}/>}
 
@@ -56,6 +61,7 @@ function App() {
 
               {capturedImage && <RandomAnimal photoTaken={true}/>}
           </StyledBox>
+          </div>
 
       </>
   )
