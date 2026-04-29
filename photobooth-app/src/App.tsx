@@ -1,13 +1,11 @@
 import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
-// import heroImg from './assets/hero.png'
 import './App.css'
 import RandomMeme from './components/RandomMeme'
 import RandomAnimal from './components/RandomAnimal'
 import Webcam, { StyledButton } from './components/Webcam'
 import RandomColor from "./components/RandomColor.tsx";
 import styled from "styled-components"
+import PhotoStrip from "./components/Photostrip.tsx";
 
 const StyledContainer = styled.div`
     display: flex;
@@ -84,6 +82,13 @@ function App() {
 
               {capturedImage && <RandomAnimal photoTaken={true}/>}
           </StyledBox>
+
+              <PhotoStrip
+                  selfieUrl={capturedImage}
+                  catUrl={`https://http.cat/${randomCode}`}
+                  memeUrl={memeUrl}
+                  randomColor={randomColor}
+              />
           </div>
 
       </>
