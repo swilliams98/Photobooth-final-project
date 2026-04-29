@@ -93,9 +93,9 @@ export default function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: 
             <Strip ref={stripRef}>
                 <Title> Photo Strip </Title>
                 {selfieUrl && <Photo src={selfieUrl} alt="Selfie" />}
-                {catUrl && <Photo src={catUrl} alt="HTTP Cat" />}
                 {memeUrl && <Photo src={memeUrl} alt="Meme" />}
                 {randomColor && <ColorBlock color={randomColor} />}
+                {catUrl && <Photo src={catUrl} alt="HTTP Cat" />}
             </Strip>
 
 
