@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useScreenshot } from "use-react-screenshot";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 
 const Strip = styled.div`
