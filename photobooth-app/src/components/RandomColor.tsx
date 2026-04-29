@@ -1,8 +1,5 @@
 import styled from "styled-components";
-
-
-import {useState} from "react";
-
+// import {useState} from "react";
 
 const StyledRandColor = styled.div`
     display: flex;
@@ -21,10 +18,10 @@ interface RandomColorProps {
     photoTaken: boolean
 }
 
-export default function RandomColor({ photoTaken }: RandomColorProps) {
-    const [randomColor] = useState(
-        () =>  "#" + Math.floor(Math.random() * 0xffffff).toString(16)
-    );
+export default function RandomColor({ photoTaken, randomColor }: RandomColorProps) {
+    // const [randomColor] = useState(
+    //     () =>  "#" + Math.floor(Math.random() * 0xffffff).toString(16)
+    // );
      if (!photoTaken) return (<></>)
     return(
         <StyledRandColor>

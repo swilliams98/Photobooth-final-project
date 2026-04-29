@@ -51,65 +51,59 @@ const StyledHeader = styled.header`
 
 
 
+
 function App() {
-  const [capturedImage, setCapturedImage] = useState<string | null>(null)
-    const [randomCode] = useState(() => {
-        const codes = [200, 404, 500, 418] // or full list
-        return codes[Math.floor(Math.random() * codes.length)]
-    })
+    const codes = [100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 214, 226, 300, 301, 302, 303, 304, 305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 428, 429, 431, 444, 450, 451, 495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 506, 507, 508, 509, 510, 511, 521, 522, 523, 525, 530, 599]
 
-    const [randomColor] = useState(
-        () => "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0")
-    )
-
+    const [capturedImage, setCapturedImage] = useState<string | null>(null)
+    const [randomCode, setRandomCode] = useState(() => codes[Math.floor(Math.random() * codes.length)])
+    const [randomColor, setRandomColor] = useState(() => "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0"))
     const [memeUrl, setMemeUrl] = useState<string | null>(null)
 
-  return (
-      <>
-          <StyledHeader>Selfie Generator</StyledHeader>
-          
-          <div>
-              <StyledContainer>
+    return (
+        <>
+            <StyledHeader>Selfie Generator</StyledHeader>
 
-                  <h1>snap a pic</h1>
+            <div>
+                <StyledContainer>
+                    <h1>snap a pic</h1>
+                    {!capturedImage && (
+                        <Webcam setCapturedImage={setCapturedImage} />
+                    )}
+                    {capturedImage && <StyledImg src={capturedImage}/>}
+                    {capturedImage && <StyledButton onClick={() => {
+                        setCapturedImage(null)
+                        setRandomCode(codes[Math.floor(Math.random() * codes.length)])
+                        setRandomColor("#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0"))
+                    }}>
+                        Retake
+                    </StyledButton>}
+                </StyledContainer>
+            </div>
 
-                  {!capturedImage && (
-                      <Webcam
-                          setCapturedImage={setCapturedImage}
-                      />
+            <div className="ticks"></div>
+            <section id="spacer"></section>
+            <div className="heyy">
+                <StyledBox>
+                    {capturedImage && (
+                        <RandomMeme photoTaken={true} setMemeUrl={setMemeUrl} />
+                    )}
+                    {capturedImage && <RandomColor photoTaken={true} randomColor={randomColor} />}
+                    {capturedImage && <RandomAnimal photoTaken={true} randomCode={randomCode} />}
+                </StyledBox>
 
-                  )}
-                  {capturedImage && <StyledImg src={capturedImage}/>}
-                  {capturedImage && <StyledButton onClick={() => setCapturedImage(null)}>Retake</StyledButton>}
-              </StyledContainer>
-          </div>
-
-          <div className="ticks"></div>
-          <section id="spacer"></section>
-          <div className="heyy">
-          <StyledBox>
-              {capturedImage && (
-                  <RandomMeme photoTaken={true} setMemeUrl={setMemeUrl} />
-              )}
-
-              {capturedImage && <RandomColor photoTaken={true}/>}
-
-              {capturedImage && <RandomAnimal photoTaken={true}/>}
-
-          </StyledBox>
-
-              {capturedImage && memeUrl && (
-                  <PhotoStrip
-                      selfieUrl={capturedImage}
-                      memeUrl={memeUrl}
-                      randomColor={randomColor}
-                      catUrl={`https://http.cat/${randomCode}`}
-                  />
-              )}
-          </div>
-
-      </>
-  )
+                {capturedImage && memeUrl && (
+                    <PhotoStrip
+                        selfieUrl={capturedImage}
+                        memeUrl={memeUrl}
+                        randomColor={randomColor}
+                        catUrl={`https://http.cat/${randomCode}`}
+                    />
+                )}
+            </div>
+        </>
+    )
 }
+
 
 export default App
