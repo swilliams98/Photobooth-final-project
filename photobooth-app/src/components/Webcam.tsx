@@ -31,8 +31,11 @@ export const StyledButton = styled.button`
     }
 `
 
+
 const Webcam = ({setCapturedImage} : any) => (
+
     <StyledDiv>
+
         <ReactWebcam
             audio={false}
             mirrored
@@ -40,6 +43,12 @@ const Webcam = ({setCapturedImage} : any) => (
             screenshotFormat="image/jpeg"
             width={640}
             videoConstraints={videoConstraints}
+            style={{
+
+                objectFit: "cover",
+                border: "10px ridge #B562BAFF",
+                borderRadius: "8px",
+            }}
         >
             {/* @ts-expect-error */}
             {({ getScreenshot }) => (

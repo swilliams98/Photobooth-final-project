@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0d7bc02e-d10f-4066-914a-e0bff6bdb9f7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/photobooth-app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/photobooth-app/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/photobooth-app/src/components/RandomAnimal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/photobooth-app/src/components/RandomAnimal.tsx" afterDir="false" />
@@ -14,6 +15,8 @@
       <change beforePath="$PROJECT_DIR$/photobooth-app/src/components/Webcam.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/photobooth-app/src/components/Webcam.tsx" afterDir="false" />
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> a658e92ec212cabb0f9dd8879918500d6f28948b
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +34,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JavaScript Debug.localhost:5173.executor": "Run",
@@ -55,6 +59,27 @@
       <recent name="C:\Users\illin\OneDrive\Documents\GitHub\Photobooth-final-project\photobooth-app\src\fonts" />
     </key>
   </component>
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.localhost:5173.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\fzama\\Documents\\GitHub\\Photobooth-final-project\\photobooth-app\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+>>>>>>> a658e92ec212cabb0f9dd8879918500d6f28948b
   <component name="RunManager">
     <configuration name="localhost:5173" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:5173/">
       <method v="2" />
@@ -85,6 +110,7 @@
       <workItem from="1776902962093" duration="1696000" />
       <workItem from="1776913205835" duration="2666000" />
       <workItem from="1776916572321" duration="2987000" />
+      <workItem from="1777084259519" duration="671000" />
     </task>
     <servers />
   </component>

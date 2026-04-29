@@ -13,6 +13,8 @@ const StyledContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto;
+    padding-top: -20px;
     
 `
 
@@ -21,18 +23,32 @@ const StyledBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    margin: auto;
+    width: 100%;
 
     @media screen and (max-width: 1000px) {
         flex-direction: column;
+        align-items: center;
 
     }
 `
 const StyledImg = styled.img`
-    border: 8px ridge #B562BAFF;
+    border: 10px ridge #B562BAFF;
     border-radius: 8px;
-    margin: 10px;
+    object-fit: cover;
+    
+   
 `
+const StyledHeader = styled.header`
+    width: 100%;
+    background-color: #b562ba;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+`
+
 
 
 function App() {
@@ -40,11 +56,12 @@ function App() {
 
   return (
       <>
+          <StyledHeader>Selfie Generator</StyledHeader>
           
           <div>
               <StyledContainer>
 
-                  <h1>Webcam Feature</h1>
+                  <h1>snap a pic</h1>
 
                   {!capturedImage && (
                       <Webcam
