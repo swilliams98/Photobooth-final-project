@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import styled from "styled-components";
 
+//scarlet's file
+
 const StyledMeme = styled.div`
   display: flex;
   flex-direction: column;
