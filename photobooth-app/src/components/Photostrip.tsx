@@ -89,8 +89,10 @@ export default function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: 
     };
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Strip ref={stripRef}>
+
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+
+        <Strip ref={stripRef}>
                 <Title> Photo Strip </Title>
                 {selfieUrl && <Photo src={selfieUrl} alt="Selfie" />}
                 {memeUrl && <Photo src={memeUrl} alt="Meme" />}
@@ -98,9 +100,7 @@ export default function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: 
                 {catUrl && <Photo src={catUrl} alt="HTTP Cat" />}
             </Strip>
 
-            <DownloadBtn onClick={handleDownload} disabled={!allReady}>
-                {allReady ? "⬇ Download" : "Waiting for photos…"}
-            </DownloadBtn>
+
         </div>
     );
 }
