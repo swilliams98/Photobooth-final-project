@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
     margin: auto;
     padding-top: -20px;
     
+    
 `
 
 const StyledBox = styled.div`
@@ -34,7 +35,6 @@ const StyledImg = styled.img`
     border-radius: 8px;
     object-fit: cover;
     
-   
 `
 const StyledHeader = styled.header`
     width: 100%;
@@ -51,6 +51,16 @@ const StyledHeader = styled.header`
 
 function App() {
   const [capturedImage, setCapturedImage] = useState<string | null>(null)
+    const [randomCode] = useState(() => {
+        const codes = [200, 404, 500, 418] // or full list
+        return codes[Math.floor(Math.random() * codes.length)]
+    })
+
+    const [randomColor] = useState(
+        () => "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0")
+    )
+
+    const [memeUrl, setMemeUrl] = useState<string | null>(null)
 
   return (
       <>
@@ -76,19 +86,22 @@ function App() {
           <section id="spacer"></section>
           <div className="heyy">
           <StyledBox>
-              {capturedImage && <RandomMeme photoTaken={true}/>}
+              {capturedImage && (
+                  <RandomMeme photoTaken={true} setMemeUrl={setMemeUrl} />
+              )}
 
               {capturedImage && <RandomColor photoTaken={true}/>}
 
               {capturedImage && <RandomAnimal photoTaken={true}/>}
           </StyledBox>
-
-              <PhotoStrip
-                  selfieUrl={capturedImage}
-                  catUrl={`https://http.cat/${randomCode}`}
-                  memeUrl={memeUrl}
-                  randomColor={randomColor}
-              />
+              {capturedImage && memeUrl && (
+                  <PhotoStrip
+                      selfieUrl={capturedImage}
+                      catUrl={`https://http.cat/${randomCode}`}
+                      memeUrl={memeUrl}
+                      randomColor={randomColor}
+                  />
+              )}
           </div>
 
       </>

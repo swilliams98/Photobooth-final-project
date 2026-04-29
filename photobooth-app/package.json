@@ -10,9 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< Updated upstream
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-screen-capture": "^1.1.1",
+=======
+    "html2canvas": "^1.4.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.14.2",
+>>>>>>> Stashed changes
     "react-webcam": "^7.2.0",
     "styled-components": "^6.4.1",
     "use-react-screenshot": "^4.0.0"

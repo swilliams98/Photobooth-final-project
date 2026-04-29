@@ -13,6 +13,7 @@ const StyledDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 `
 
 export const StyledButton = styled.button`
@@ -48,6 +49,7 @@ const Webcam = ({setCapturedImage} : any) => (
                 objectFit: "cover",
                 border: "10px ridge #B562BAFF",
                 borderRadius: "8px",
+                boxShadow: "8px 8px 0px #111",
             }}
         >
             {/* @ts-expect-error */}

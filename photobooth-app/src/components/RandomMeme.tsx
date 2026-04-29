@@ -38,11 +38,12 @@ interface GiphyResponse {
 // photoTaken flips to true when the user takes a photo, triggering a new meme fetch
 interface RandomMemeProps {
   photoTaken: boolean
+  setMemeUrl: (url: string) => void
 }
 
-export default function RandomMeme({ photoTaken }: RandomMemeProps) {
+export default function RandomMeme({ photoTaken, setMemeUrl }: RandomMemeProps) {
   // memeUrl holds the GIF link; memeTitle holds the GIF's name from Giphy
-  const [memeUrl, setMemeUrl] = useState<string | null>(null)
+  const [memeUrl, setLocalMemeUrl] = useState<string | null>(null)
   const [memeTitle, setMemeTitle] = useState<string>('')
   // loading shows a placeholder while the request is in-flight
   const [loading, setLoading] = useState(false)
@@ -67,6 +68,7 @@ export default function RandomMeme({ photoTaken }: RandomMemeProps) {
         // Prefer the smaller downsized_medium size; fall back to full original
         const img = json.data.images.downsized_medium ?? json.data.images.original
         // Save the GIF URL so the <img> tag can display it
+        setLocalMemeUrl(img.url)
         setMemeUrl(img.url)
         // Save the title so it shows as a caption below the GIF
         setMemeTitle(json.data.title)

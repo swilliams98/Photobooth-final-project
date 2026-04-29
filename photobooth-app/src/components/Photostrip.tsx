@@ -2,10 +2,6 @@ import { useRef } from "react";
 import { useScreenshot } from "use-react-screenshot";
 import styled, { keyframes } from "styled-components";
 
-const popIn = keyframes`
-  from { opacity: 0; transform: scale(0.85); }
-  to   { opacity: 1; transform: scale(1); }
-`;
 
 const Strip = styled.div`
   display: flex;
@@ -17,7 +13,6 @@ const Strip = styled.div`
   border-radius: 6px;
   padding: 16px;
   box-shadow: 8px 8px 0px #111;
-  animation: ${popIn} 0.4s ease both;
   width: 260px;
 `;
 
@@ -90,7 +85,7 @@ export default function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: 
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Strip ref={stripRef}>
-                <Title>✦ Photo Strip ✦</Title>
+                <Title> Photo Strip </Title>
                 {selfieUrl && <Photo src={selfieUrl} alt="Selfie" />}
                 {catUrl && <Photo src={catUrl} alt="HTTP Cat" />}
                 {memeUrl && <Photo src={memeUrl} alt="Meme" />}
