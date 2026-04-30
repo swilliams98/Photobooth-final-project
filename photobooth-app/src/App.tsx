@@ -14,7 +14,6 @@ const StyledContainer = styled.div`
     align-items: center;
     margin: auto;
     padding-top: -20px;
-    height: 100vh;
 `
 
 // button styling
@@ -72,6 +71,7 @@ const StyledHeader = styled.header`
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
+
 `
 
 const StyledFooter = styled.footer`
@@ -81,7 +81,8 @@ const StyledFooter = styled.footer`
     text-align: center;
     color: white;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: auto;     /* Pushes the footer to the bottom by consuming all leftover space above it */
+
 `
 
 

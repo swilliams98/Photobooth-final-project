@@ -67,7 +67,7 @@ const ColorBlock = styled.div<{ color: string }>`
 `;
 
 const DownloadBtn = styled.button`
-    margin-top: 16px;
+    margin: 25px 0;
     background: #5c489a;
     color: #d6cde6;
     font-size: 13px;
