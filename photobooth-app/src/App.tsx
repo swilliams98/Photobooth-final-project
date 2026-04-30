@@ -7,6 +7,8 @@ import RandomColor from "./components/RandomColor.tsx";
 import styled from "styled-components"
 import PhotoStrip from "./components/Photostrip.tsx";
 
+//Faria Zaman, Lingyin Li, Serenity Williams
+
 // centers the webcam and captured screenshotted image in a column
 const StyledContainer = styled.div`
     display: flex;
@@ -42,10 +44,12 @@ const StyledBox = styled.div`
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
+    
  
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1200px) {
         flex-direction: column;
         align-items: center;
+        
     }
 `
 
@@ -94,56 +98,50 @@ function App() {
     const [memeUrl, setMemeUrl] = useState('')
 
   return (
-      <>
-          <StyledHeader>Selfie Generator</StyledHeader>
-          <div>
-
-              <StyledContainer>
-                  <h1>Snap A Pic</h1>
-                  {/* show webcam until a photo is taken */}
-                  {!capturedImage && (
-                      <Webcam
-                          changeCapturedImage={setCapturedImage}
-                      />
-                  )}
-
-                  {/* show captured photo after taking it */}
-                  {capturedImage && <StyledImg src={capturedImage}/>}
-                  {/* retake button resets capturedImage so the webcam reappears */}
-                  {capturedImage && <StyledButton onClick={() => setCapturedImage(null)}>Retake</StyledButton>}
-              </StyledContainer>
-          </div>
-          <div className="heyy">
-          <StyledBox>
-              {/* all three result cards only render after a photo is taken */}
-              {capturedImage && (
-                  <>
-                      <RandomMeme  changeMemeUrl={setMemeUrl} />
-                      <StyledComponentWrapper>
-                          <RandomColor changeRandomColor ={setRandomColor}/>
-                      </StyledComponentWrapper>
-
-                      <RandomAnimal changeRandomAnimal = {setRandomAnimal}/>
+    <>
+        <StyledHeader>Selfie Generator</StyledHeader>
+        <div>
+            <StyledContainer>
+                <h1>Snap A Pic</h1>
+                {/* show webcam until a photo is taken */}
+                {!capturedImage && (
+                <Webcam
+                changeCapturedImage={setCapturedImage}
+                />
+                )}
+                {/* show captured photo after taking it */}
+                {capturedImage && <StyledImg src={capturedImage}/>}
+                {/* retake button resets capturedImage so the webcam reappears */}
+                {capturedImage && <StyledButton onClick={() => setCapturedImage(null)}>Retake</StyledButton>}
+            </StyledContainer>
+        </div>
+        <div className="heyy">
+        <StyledBox>
+            {/* all three result cards only render after a photo is taken */}
+            {capturedImage && (
+                <>
+                    <RandomMeme  changeMemeUrl={setMemeUrl} />
+                    <StyledComponentWrapper>
+                        <RandomColor changeRandomColor ={setRandomColor}/>
+                    </StyledComponentWrapper>
+                    <RandomAnimal changeRandomAnimal = {setRandomAnimal}/>
                 </>
-              )}
-
-          </StyledBox>
-              {/* photostrip only renders once the meme URL is available,
-                  since it needs all 4 pieces of data to build the strip */}
-              {capturedImage && memeUrl && (
-                  <PhotoStrip
-                      selfieUrl={capturedImage}
-                      memeUrl={memeUrl}
-                      randomColor={randomColor}
-                      catUrl={`https://http.cat/${randomAnimal}`}
-                  />
-              )}
-          </div>
-
-          <StyledFooter> Made with 💜 | Created by Serenity Williams, Scarlet Alvarez Marte, Faria Zaman, Lingyin Li </StyledFooter>
-
-      </>
-  )
+            )}
+        </StyledBox>
+        {/* photostrip only renders once the meme URL is available,
+        since it needs all 4 pieces of data to build the strip */}
+        {capturedImage && memeUrl && (
+        <PhotoStrip
+        selfieUrl={capturedImage}
+        memeUrl={memeUrl}
+        randomColor={randomColor}
+        catUrl={`https://http.cat/${randomAnimal}`}
+        />
+        )}
+        </div>
+        <StyledFooter> Made with 💜 | Created by Serenity Williams, Scarlet Alvarez Marte, Faria Zaman, Lingyin Li </StyledFooter>
+    </>
+  );
 }
 
 export default App

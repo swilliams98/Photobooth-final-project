@@ -1,7 +1,7 @@
+//Scarlet's file
+
 import { useState, useEffect, memo} from 'react'
 import styled from "styled-components";
-
-//scarlet's file
 
 const StyledMeme = styled.div`
   display: flex;
@@ -73,17 +73,14 @@ function RandomMeme({ changeMemeUrl }: RandomMemeProps) {
         // Save the title so it shows as a caption below the GIF
         setMemeTitle(json.data.title)
       } catch (err) {
-        // If anything went wrong (bad key, network error, etc.), show the message
         setError(err instanceof Error ? err.message : 'Failed to fetch meme')
       } finally {
-        // Always turn off the loading spinner, whether the fetch succeeded or failed
         setLoading(false)
       }
     }
     fetchMeme()
-  }, []) // dependency: re-runs each time photoTaken changes
+  }, [])
 
-  // Hide the component entirely until a photo has been taken
   if(error) {console.log(error);}
   return (
       <div className="random-meme">
@@ -91,7 +88,6 @@ function RandomMeme({ changeMemeUrl }: RandomMemeProps) {
         {/* Show a loading message while waiting for Giphy to respond */}
         {loading && <p>Loading meme...</p>}
         {/* Show the error message if something went wrong */}
-
         {/* Once loaded, display the GIF and its title */}
         {memeUrl && !loading && (
             <>
