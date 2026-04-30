@@ -2,6 +2,7 @@
 import styled from "styled-components";
 import {useState, memo} from "react";
 
+//styling for the color component :D
 const StyledBlock = styled.div`
     background-color: ${props => props.color};
     width: 400px;
