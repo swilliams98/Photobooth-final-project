@@ -1,41 +1,28 @@
-import { useRef, memo} from "react";
-// import html2canvas from "html2canvas";
-import { useScreenshot } from "use-react-screenshot";
-import styled from "styled-components";
+import { useRef,useState, useEffect, memo} from "react";
+import html2canvas from "html2canvas";
 
-//
-// // Converts an external image URL to a base64 data URL.
-// // Uses images.weserv.nl as a proxy — it's purpose-built for image proxying
-// // and always returns CORS headers, unlike http.cat which blocks direct fetches.
-// async function toDataUrl(url: string): Promise<string> {
-//   const fetchAsDataUrl = async (fetchUrl: string): Promise<string> => {
-//     const res = await fetch(fetchUrl);
-//     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-//     const blob = await res.blob();
-//     return new Promise((resolve, reject) => {
-//       const reader = new FileReader();
-//       reader.onloadend = () => resolve(reader.result as string);
-//       reader.onerror = reject;
-//       reader.readAsDataURL(blob);
-//     });
-//   };
-//
-//   try {
-//     // Try direct fetch first (works for Giphy which supports CORS)
-//     return await fetchAsDataUrl(url);
-//   } catch {
-//     // Fall back to images.weserv.nl — a dedicated image proxy that adds CORS headers
-//     return await fetchAsDataUrl(`https://images.weserv.nl/?url=${encodeURIComponent(url)}`);
-//   }
-// }
-//
-// // ─── Styled components ────────────────────────────────────────────────────────
-//
-// const Wrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `;
+// import { useScreenshot } from "use-react-screenshot";
+import styled from "styled-components";
+const LoadingBox = styled.div`
+  width: 228px;
+  height: 180px;
+  background: #f0f0f0;
+  border: 2px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #aaa;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+`;
+
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Strip = styled.div`
   display: flex;
@@ -102,6 +89,31 @@ const DownloadBtn = styled.button`
     }
 `;
 
+// Converts an external image URL to a base64 data URL.
+// Uses images.weserv.nl as a proxy — it's purpose-built for image proxying
+// and always returns CORS headers, unlike http.cat which blocks direct fetches.
+async function toDataUrl(url: string): Promise<string> {
+    const fetchAsDataUrl = async (fetchUrl: string): Promise<string> => {
+        const res = await fetch(fetchUrl);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const blob = await res.blob();
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    };
+
+    try {
+        // Try direct fetch first (works for Giphy which supports CORS)
+        return await fetchAsDataUrl(url);
+    } catch {
+        // Fall back to images.weserv.nl — a dedicated image proxy that adds CORS headers
+        return await fetchAsDataUrl(`https://images.weserv.nl/?url=${encodeURIComponent(url)}`);
+    }
+}
+
 interface PhotoStripProps {
     selfieUrl: string;
     catUrl: string ;
@@ -110,115 +122,121 @@ interface PhotoStripProps {
 }
 
  function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: PhotoStripProps) {
-    const stripRef = useRef(null);
-    const [, takeScreenshot] = useScreenshot();
+     // const stripRef = useRef<HTMLDivElement | null>(null);
+     //
+     // const [, takeScreenshot] = useScreenshot();
+     //
+     // const allReady = Boolean(selfieUrl && catUrl && memeUrl && randomColor);
+     //
+     // const handleDownload = async () => {
+     //     if (!stripRef.current) return;
+     //
+     //     // IMPORTANT: wait a frame so images are fully painted
+     //     await new Promise((r) => requestAnimationFrame(r));
+     //
+     //     const img = await takeScreenshot(stripRef.current);
+     //
+     //     const link = document.createElement("a");
+     //     link.download = "photostrip.png";
+     //     link.href = img;
+     //     link.click();
+     // };
+     //
+     // return (
+     //     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+     //         <Strip ref={stripRef}>
+     //             <Title>Photo Strip</Title>
+     //
+     //             <Photo src={selfieUrl} alt="Selfie" />
+     //             <Photo src={catUrl} alt="Cat" />
+     //             <Photo src={memeUrl} alt="Meme" />
+     //
+     //             <ColorBlock color={randomColor} />
+     //         </Strip>
+     //
+     //         <DownloadBtn onClick={handleDownload} disabled={!allReady}>
+     //             {allReady ? "⬇ Download" : "Waiting for photos…"}
+     //         </DownloadBtn>
+     //     </div>
+     // );
+  const stripRef = useRef<HTMLDivElement>(null);
+  const [downloading, setDownloading] = useState(false);
 
-    const allReady = (selfieUrl && catUrl && memeUrl && randomColor);
+  // Convert external images to data URLs before rendering.
+  // null = still loading/converting
+  const [memeDataUrl, setMemeDataUrl] = useState<string | null>(null);
+  const [catDataUrl, setCatDataUrl]   = useState<string | null>(null);
 
-    const handleDownload = async () => {
-        const img = await takeScreenshot(stripRef.current);
-        const link = document.createElement("a");
-        link.download = "photostrip.png";
-        link.href = img;
-        link.click();
-    };
-    console.log("selfie: "+selfieUrl);
-    console.log("cat: "+catUrl);
-    console.log("meme: "+memeUrl);
-    console.log("randomColor: "+randomColor);
-    return (
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Strip ref={stripRef}>
-                <Title> Photo Strip </Title>
-                <Photo src={selfieUrl} alt="Selfie" />
-                <Photo src={catUrl} alt="HTTP Cat" />
-                <Photo src={memeUrl} alt="Meme" />
-                <ColorBlock color={randomColor} />
-            </Strip>
+  useEffect(() => {
+    if (!memeUrl) return;
+    setMemeDataUrl(null); // reset while new meme converts
+    toDataUrl(memeUrl)
+      .then(setMemeDataUrl)
+      .catch(() => setMemeDataUrl(memeUrl)); // last resort: original URL
+  }, [memeUrl]);
 
-            <DownloadBtn onClick={handleDownload} disabled={!allReady}>
-                {allReady ? "⬇ Download" : "Waiting for photos…"}
-            </DownloadBtn>
-        </div>
-    );
-  // const stripRef = useRef<HTMLDivElement>(null);
-  // const [downloading, setDownloading] = useState(false);
-  //
-  // // Convert external images to data URLs before rendering.
-  // // null = still loading/converting
-  // const [memeDataUrl, setMemeDataUrl] = useState<string | null>(null);
-  // const [catDataUrl, setCatDataUrl]   = useState<string | null>(null);
-  //
-  // useEffect(() => {
-  //   if (!memeUrl) return;
-  //   setMemeDataUrl(null); // reset while new meme converts
-  //   toDataUrl(memeUrl)
-  //     .then(setMemeDataUrl)
-  //     .catch(() => setMemeDataUrl(memeUrl)); // last resort: original URL
-  // }, [memeUrl]);
-  //
-  // useEffect(() => {
-  //   if (!catUrl) return;
-  //   setCatDataUrl(null); // reset while new cat converts
-  //   toDataUrl(catUrl)
-  //     .then(setCatDataUrl)
-  //     .catch(() => setCatDataUrl(catUrl)); // last resort: original URL
-  // }, [catUrl]);
-  //
-  // // Download button stays disabled until every image is ready
-  // const allReady = !!(selfieUrl && memeDataUrl && catDataUrl && randomColor);
-  //
-  // const handleDownload = async () => {
-  //   if (!stripRef.current) return;
-  //   setDownloading(true);
-  //   try {
-  //     // All images are data URLs — no cross-origin canvas issues
-  //     const canvas = await html2canvas(stripRef.current, {
-  //       scale: 2,
-  //       backgroundColor: "#ffffff",
-  //       useCORS: false,
-  //       allowTaint: false,
-  //     });
-  //     const link = document.createElement("a");
-  //     link.download = "photostrip.png";
-  //     link.href = canvas.toDataURL("image/png");
-  //     link.click();
-  //   } catch (err) {
-  //     console.error("Download failed:", err);
-  //   } finally {
-  //     setDownloading(false);
-  //   }
-  // };
-  //
-  // return (
-  //   <Wrapper>
-  //     <Strip ref={stripRef}>
-  //       <Title>Photo Strip</Title>
-  //
-  //       {/* Selfie is already a data URL straight from the webcam */}
-  //       {selfieUrl && <Photo src={selfieUrl} alt="Selfie" />}
-  //
-  //       {/* Meme: placeholder while converting, then the data URL */}
-  //       {!memeDataUrl
-  //         ? <LoadingBox>Loading meme…</LoadingBox>
-  //         : <Photo src={memeDataUrl} alt="Meme" />
-  //       }
-  //
-  //       {/* Color block needs no async loading */}
-  //       {randomColor && <ColorBlock color={randomColor} />}
-  //
-  //       {/* Cat: placeholder while converting via proxy, then the data URL */}
-  //       {!catDataUrl
-  //         ? <LoadingBox>Loading cat…</LoadingBox>
-  //         : <Photo src={catDataUrl} alt="HTTP Cat" />
-  //       }
-  //     </Strip>
-  //
-  //     <DownloadBtn onClick={handleDownload} disabled={!allReady || downloading}>
-  //       {!allReady ? "Loading images…" : downloading ? "Saving…" : "⬇ Download Strip"}
-  //     </DownloadBtn>
-  //   </Wrapper>
-  // );
+  useEffect(() => {
+    if (!catUrl) return;
+    setCatDataUrl(null); // reset while new cat converts
+    toDataUrl(catUrl)
+      .then(setCatDataUrl)
+      .catch(() => setCatDataUrl(catUrl)); // last resort: original URL
+  }, [catUrl]);
+
+  // Download button stays disabled until every image is ready
+  const allReady = !!(selfieUrl && memeDataUrl && catDataUrl && randomColor);
+
+  const handleDownload = async () => {
+    if (!stripRef.current) return;
+    setDownloading(true);
+    try {
+      // All images are data URLs — no cross-origin canvas issues
+      const canvas = await html2canvas(stripRef.current, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: false,
+        allowTaint: false,
+      });
+      const link = document.createElement("a");
+      link.download = "photostrip.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch (err) {
+      console.error("Download failed:", err);
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  return (
+    <Wrapper>
+      <Strip ref={stripRef}>
+        <Title>Photo Strip</Title>
+
+        {/* Selfie is already a data URL straight from the webcam */}
+        {selfieUrl && <Photo src={selfieUrl} alt="Selfie" />}
+
+        {/* Meme: placeholder while converting, then the data URL */}
+        {!memeDataUrl
+          ? <LoadingBox>Loading meme…</LoadingBox>
+          : <Photo src={memeDataUrl} alt="Meme" />
+        }
+
+        {/* Color block needs no async loading */}
+        {randomColor && <ColorBlock color={randomColor} />}
+
+        {/* Cat: placeholder while converting via proxy, then the data URL */}
+        {!catDataUrl
+          ? <LoadingBox>Loading cat…</LoadingBox>
+          : <Photo src={catDataUrl} alt="HTTP Cat" />
+        }
+      </Strip>
+
+      <DownloadBtn onClick={handleDownload} disabled={!allReady || downloading}>
+        {!allReady ? "Loading images…" : downloading ? "Saving…" : "⬇ Download Strip"}
+      </DownloadBtn>
+    </Wrapper>
+  );
 }
 
 export default memo(PhotoStrip);
