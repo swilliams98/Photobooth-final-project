@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
     align-items: center;
     margin: auto;
     padding-top: -20px;
+    height: 100vh;
 `
 
 // button styling
@@ -73,6 +74,16 @@ const StyledHeader = styled.header`
     margin-bottom: 20px;
 `
 
+const StyledFooter = styled.footer`
+    width: 100%;
+    background-color: #b562ba;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+`
+
 
 function App() {
     // stores the image captured
@@ -88,7 +99,7 @@ function App() {
           <div>
 
               <StyledContainer>
-                  <h1>snap a pic</h1>
+                  <h1>Snap A Pic</h1>
                   {/* show webcam until a photo is taken */}
                   {!capturedImage && (
                       <Webcam
@@ -128,6 +139,8 @@ function App() {
                   />
               )}
           </div>
+
+          <StyledFooter> Made with 💜 | Created by Serenity Williams, Scarlet Alvarez Marte, Faria Zaman, Lingyin Li </StyledFooter>
 
       </>
   )
