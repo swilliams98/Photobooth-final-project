@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo} from 'react'
 import styled from "styled-components";
 
 //scarlet's file
@@ -17,7 +17,7 @@ const MemeImg = styled.img`
 `
 
 
-const GIPHY_API_KEY = '2P1VkbCPRbPBy6KV6rrzzs9aBH0IvNDd'
+const GIPHY_API_KEY = 'EoESnCwx83gxyCOj8BBbFYIibohstfdw'
 
 // Describes the shape of an image object returned by Giphy
 interface GiphyImage {
@@ -39,10 +39,10 @@ interface GiphyResponse {
 
 // photoTaken flips to true when the user takes a photo, triggering a new meme fetch
 interface RandomMemeProps {
-  setMemeUrl: (url: string) => void
+  changeMemeUrl: (url: string) => void;
 }
 
-export default function RandomMeme({ setMemeUrl }: RandomMemeProps) {
+function RandomMeme({ changeMemeUrl }: RandomMemeProps) {
   // memeUrl holds the GIF link; memeTitle holds the GIF's name from Giphy
   const [memeUrl, setLocalMemeUrl] = useState<string | null>(null)
   const [memeTitle, setMemeTitle] = useState<string>('')
@@ -53,7 +53,6 @@ export default function RandomMeme({ setMemeUrl }: RandomMemeProps) {
 
   // Runs every time photoTaken changes — fetches a new random meme when it becomes true
   useEffect(() => {
-
     const fetchMeme = async () => {
       setLoading(true)
       setError(null)
@@ -70,7 +69,7 @@ export default function RandomMeme({ setMemeUrl }: RandomMemeProps) {
         // Save the GIF URL so the <img> tag can display it
         setLocalMemeUrl(img.url)
         // send up to App
-        setMemeUrl(img.url)
+        changeMemeUrl(img.url)
         // Save the title so it shows as a caption below the GIF
         setMemeTitle(json.data.title)
       } catch (err) {
@@ -81,19 +80,18 @@ export default function RandomMeme({ setMemeUrl }: RandomMemeProps) {
         setLoading(false)
       }
     }
-
     fetchMeme()
   }, []) // dependency: re-runs each time photoTaken changes
 
   // Hide the component entirely until a photo has been taken
-
+  if(error) {console.log(error);}
   return (
       <div className="random-meme">
         <StyledMeme><h1>Your Meme</h1>
         {/* Show a loading message while waiting for Giphy to respond */}
         {loading && <p>Loading meme...</p>}
         {/* Show the error message if something went wrong */}
-        {error && <p className="error">{error}</p>}
+
         {/* Once loaded, display the GIF and its title */}
         {memeUrl && !loading && (
             <>
@@ -104,3 +102,5 @@ export default function RandomMeme({ setMemeUrl }: RandomMemeProps) {
       </div>
   )
 }
+
+export default memo(RandomMeme)

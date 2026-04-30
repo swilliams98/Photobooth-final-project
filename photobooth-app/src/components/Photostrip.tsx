@@ -1,39 +1,41 @@
-import { useRef, useState, useEffect } from "react";
-import html2canvas from "html2canvas";
+import { useRef, memo} from "react";
+// import html2canvas from "html2canvas";
+import { useScreenshot } from "use-react-screenshot";
 import styled from "styled-components";
 
-// Converts an external image URL to a base64 data URL.
-// Uses images.weserv.nl as a proxy — it's purpose-built for image proxying
-// and always returns CORS headers, unlike http.cat which blocks direct fetches.
-async function toDataUrl(url: string): Promise<string> {
-  const fetchAsDataUrl = async (fetchUrl: string): Promise<string> => {
-    const res = await fetch(fetchUrl);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const blob = await res.blob();
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  };
-
-  try {
-    // Try direct fetch first (works for Giphy which supports CORS)
-    return await fetchAsDataUrl(url);
-  } catch {
-    // Fall back to images.weserv.nl — a dedicated image proxy that adds CORS headers
-    return await fetchAsDataUrl(`https://images.weserv.nl/?url=${encodeURIComponent(url)}`);
-  }
-}
-
-// ─── Styled components ────────────────────────────────────────────────────────
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+//
+// // Converts an external image URL to a base64 data URL.
+// // Uses images.weserv.nl as a proxy — it's purpose-built for image proxying
+// // and always returns CORS headers, unlike http.cat which blocks direct fetches.
+// async function toDataUrl(url: string): Promise<string> {
+//   const fetchAsDataUrl = async (fetchUrl: string): Promise<string> => {
+//     const res = await fetch(fetchUrl);
+//     if (!res.ok) throw new Error(`HTTP ${res.status}`);
+//     const blob = await res.blob();
+//     return new Promise((resolve, reject) => {
+//       const reader = new FileReader();
+//       reader.onloadend = () => resolve(reader.result as string);
+//       reader.onerror = reject;
+//       reader.readAsDataURL(blob);
+//     });
+//   };
+//
+//   try {
+//     // Try direct fetch first (works for Giphy which supports CORS)
+//     return await fetchAsDataUrl(url);
+//   } catch {
+//     // Fall back to images.weserv.nl — a dedicated image proxy that adds CORS headers
+//     return await fetchAsDataUrl(`https://images.weserv.nl/?url=${encodeURIComponent(url)}`);
+//   }
+// }
+//
+// // ─── Styled components ────────────────────────────────────────────────────────
+//
+// const Wrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
 
 const Strip = styled.div`
   display: flex;
@@ -66,6 +68,8 @@ const Photo = styled.img`
   display: block;
 
 `;
+
+//
 
 const ColorBlock = styled.div<{ color: string }>`
   width: 228px;
@@ -105,11 +109,11 @@ interface PhotoStripProps {
     randomColor: string; // hex string like "#a3f1bc"
 }
 
-export default function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: PhotoStripProps) {
+ function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: PhotoStripProps) {
     const stripRef = useRef(null);
     const [, takeScreenshot] = useScreenshot();
 
-    const allReady = selfieUrl && catUrl && memeUrl && randomColor;
+    const allReady = (selfieUrl && catUrl && memeUrl && randomColor);
 
     const handleDownload = async () => {
         const img = await takeScreenshot(stripRef.current);
@@ -213,3 +217,5 @@ export default function PhotoStrip({ selfieUrl, catUrl, memeUrl, randomColor }: 
   //   </Wrapper>
   // );
 }
+
+export default memo(PhotoStrip);

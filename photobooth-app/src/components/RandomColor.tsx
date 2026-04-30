@@ -1,17 +1,7 @@
 import styled from "styled-components";
+import {useState, memo} from "react";
 
-
-const StyledRandColor = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-`
-
-interface StyledBlockProps {
-    color?: any
-}
-
+//Serenity Williams
 const StyledBlock = styled.div`
     background-color: ${props => props.color};
     width: 400px;
@@ -19,14 +9,25 @@ const StyledBlock = styled.div`
     border: 10px ridge #B562BAFF;
     border-radius: 60px;
 `
-//
 
-export default function RandomColor({randomColor}: string) {
-    return (
-        <StyledRandColor>
-            <h1>Your Color Is</h1>
-            <StyledBlock color={randomColor}/>
-        </StyledRandColor>
-    );
-
+interface RandomColorProps{
+    changeRandomColor: (color: string) => void;
 }
+
+function RandomColor({changeRandomColor}:RandomColorProps) {
+    // Usestate fo r
+    const [randomColor] = useState(
+        () => "#" + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, "0")
+    )
+    changeRandomColor(randomColor)
+    return (
+        <>
+            <h1>Your Color</h1>
+            <StyledBlock color={randomColor} />
+
+        </>
+    );
+}
+
+export default memo(RandomColor)
+//don't want this to render twice if not necessary - doesn't change until the next time the user takes a different photo
